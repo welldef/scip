@@ -1,0 +1,72 @@
+;;scip 1.3
+;;max2: x y z -> a b
+;;eg. (max2 3 9 10) -> (9 10)
+(define (max2 x y z)
+  (if (> x y) (cons x (max y z))
+      (cons y (max x z))
+      )
+  )
+(max2 3 8 6)
+
+;scip 1.4
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b)
+  )
+(a-plus-abs-b 10 -3)
+;scpi 1.5
+(define (p) 4)
+(define (test x y)
+  (if (= 0 x)
+      0
+      y)
+   )
+
+(test 0 (p))
+(write `abc)
+;(define a (read))
+;(write a)
+
+;scip 1.7
+(define (sqrt-iter x guess prev_guess)
+  (if (good-enough? x guess prev_guess)
+      guess
+      (sqrt-iter x (improve x guess) guess))
+  )
+
+(define (avg x y)
+  (/ (+ x y) 2))
+
+(define (improve x guess)
+  (avg guess (/ x guess)))
+
+(define (square x)
+  (* x x))
+
+;(define (good-enough? x guess prev_guess)
+ ; (> 0.1 (/ (abs (- guess prev_guess)) guess)))
+(define (good-enough? x guess prev_guess)
+  (> 0.1 (abs (- (square guess) x))))
+
+(sqrt-iter 0.0000001 1 0)
+
+
+;1.11
+;f: a b c n max -> sum
+(define (mysum a b c)
+  (+ a (+ (* b 2) (* c 3))))
+
+(define (f a b c n m)
+  (cond ((< m 3) m)
+        ((> n m) c)
+        (else (f b c (mysum c b a) (+ 1 n) m)))
+ )
+(f 0 1 2 3 3)
+
+(define (f n)
+ (if (< n 3) n
+     (mysum (f (- n 1)) (f (- n 2)) (f (- n 3)))
+      )
+  )
+
+(f 3)
+             
