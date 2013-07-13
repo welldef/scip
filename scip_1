@@ -23,7 +23,7 @@
 
 (test 0 (p))
 (write `abc)
-;(define a (read))
+;(define a (read))   
 ;(write a)
 
 ;scip 1.7
@@ -69,4 +69,42 @@
   )
 
 (f 3)
-             
+       
+;1.12  
+;pascal: n -> list
+
+(define (add_first_2 elems)
+  (+ (car elems)
+     (if (pair? (cdr elems)) (car (cdr elems))
+         (cdr elems))
+  )
+  )
+        
+(define (next_pascal elems)
+  (cond ((not (pair? elems)) '())
+        ((null? (cdr elems)) '())
+        (else (cons (add_first_2 elems) (next_pascal (cdr elems))))
+        )                                                                
+  )
+
+(define (pascal n)
+  (cond ((= n 1) '(1))
+        (else (append (cons 1 (next_pascal (pascal (- n 1)))) '(1) ) )
+        )
+  )
+
+;(cons 1 (append (next_pascal (list 1 2 3)) 1))
+(pascal 1)
+(pascal 2)
+(pascal 3)
+(pascal 4)
+(pascal 5)
+; these are lists:
+;   '(), '(1), (cons 5 '(1)) (pair? '()) = false (pair? '(1)) = true
+; these are not lists:
+; (cons 1 2), (append (list 5 4) 3)
+
+;(pair? '())
+;(list? (append (list 5 4) 3))
+;(cons (cons 5 4) 1)
+;(list (list 5 4) 1)
